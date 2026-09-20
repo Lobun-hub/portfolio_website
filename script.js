@@ -11,6 +11,32 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
+//Dark Mode Toggle with Persistent State
+const toggleButton = document.createElement('button');
+toggleButton.type = 'button';
+toggleButton.textContent = "🌙";
+toggleButton.setAttribute('aria-label', 'Toggle dark mode');
+toggleButton.style.marginLeft = '1rem';
+document.querySelector('header nav').appendChild(toggleButton);
+
+function applyDarkMode(isDark) {
+  document.body.classList.toggle('dark-mode', isDark);
+  toggleButton.textContent = isDark ? '☀️' : '🌙';
+}
+
+//Load saved preference from localStorage
+const savedPreference = localStorage.getItem('darkMode') || "light";
+applyDarkMode(savedPreference === "dark");
+
+//Toggle on button click
+toggleButton.addEventListener('click', () => {
+  const isDark = document.body.classList.contains('dark-mode') ? "dark" : "light";
+  const newPreference = isDark === "dark" ? "light" : "dark";
+  applyDarkMode(newPreference === "dark");
+  localStorage.setItem('darkMode', newPreference);
+});
+
+
 // Form Validation
 const form = document.querySelector('form');
 form.addEventListener('submit', function(e) {
